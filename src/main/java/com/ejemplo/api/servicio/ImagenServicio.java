@@ -21,24 +21,31 @@ public class ImagenServicio {
     private InmuebleRepo inmuebleRepo;
     private final String CARPETA_PATH = "C:\\Users\\sbria\\OneDrive\\Escritorio\\misImagenes\\";
 
-    public String subirImagen(MultipartFile file, Integer idInmueble) throws IOException {
+    public String subirImagen(MultipartFile[] files, Integer idInmueble) throws IOException {
         Inmueble inmueble = inmuebleRepo.findById(idInmueble).get();
         if (inmueble != null) {
 
-            String filePath = CARPETA_PATH + file.getOriginalFilename();
+            for (MultipartFile archivo :files) {
+                String filePath = CARPETA_PATH + archivo.getOriginalFilename();
 
-            Imagen imagen = imagenRepo.save(Imagen.builder()
-                    .nombre(file.getOriginalFilename())
-                    .tipo(file.getContentType())
-                    .inmueble(inmueble)
-                    .filePath(filePath)
-                    .build());
-            file.transferTo(new File(filePath));
-            if (imagen != null) {
-                return "Se cargaron correctamente las imagenes " + file.getOriginalFilename();
+                Imagen imagen = new Imagen();
+                imagen.setNombre(archivo.getOriginalFilename());
+                imagen.setTipo(archivo.getContentType());
+                imagen.setInmueble(inmueble);
+                imagen.setFilePath(filePath);
+
+                imagenRepo.save(imagen);
+                try{
+                    File file = new File(filePath);
+                    archivo.transferTo(file);
+                }catch (Exception e){
+                    return "Error al cargar las imagenes " + archivo.getOriginalFilename();
+                }
+
             }
-            }
-            return null;
+            return "Imagenes subidas correctamente";
+        }else{
+            return "No se encontro el ID de inmueble "+ idInmueble;
         }
-
+    }
 }

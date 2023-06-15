@@ -31,9 +31,9 @@ public class ImagenControlador {
     private ImagenServicio imagenServicio;
 
     @PostMapping
-    public ResponseEntity<?> crearImagen(@RequestParam("files") MultipartFile file,
+    public ResponseEntity<?> crearImagen(@RequestParam("files") MultipartFile[] files,
                                                 @RequestParam("idInmueble")Integer idInmueble) throws IOException {
-        String imagen = imagenServicio.subirImagen(file, idInmueble);
+        String imagen = imagenServicio.subirImagen(files, idInmueble);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(imagen);
 
