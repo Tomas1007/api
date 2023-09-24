@@ -1,19 +1,22 @@
 package com.ejemplo.api.entidades;
 
+import com.ejemplo.api.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
     @Entity
-    @Data
+    @Getter
+    @Setter
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
@@ -31,12 +34,22 @@ import java.util.List;
         private String email;
         @Column(name= "contrasenia")
         private String password;
-        @Enumerated(EnumType.STRING)
-        private Rol roles;
+        @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+        @JoinTable(name = "users_rol",
+                joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+        private Set<Rol> roles = new HashSet<>();
+
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        private Set<Inmueble> inmuebles = new HashSet<>();
+
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        private Set<Token> tokens = new HashSet<>();
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return List.of(new SimpleGrantedAuthority(roles.name()));
+            return roles.stream()
+                    .map(rol -> new SimpleGrantedAuthority(rol.getNombreRol())).collect(Collectors.toList());
         }
 
         @Override
