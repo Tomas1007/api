@@ -8,9 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -38,7 +36,7 @@ import java.util.stream.Collectors;
         @JoinTable(name = "users_rol",
                 joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
-        private Set<Rol> roles = new HashSet<>();
+        private List<Rol> roles = new ArrayList<>();
 
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
         private Set<Inmueble> inmuebles = new HashSet<>();

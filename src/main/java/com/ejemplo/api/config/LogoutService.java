@@ -25,6 +25,9 @@ public class LogoutService implements LogoutHandler {
             return;
         }
         jwt = authHeader.substring(7);
-        tokenRepository.findByToken(jwt).ifPresent(tokenRepository::delete);
+        var tokenGuardado = tokenRepository.findByToken(jwt).orElseThrow(null);
+        if(tokenGuardado != null) {
+            tokenRepository.delete(tokenGuardado);
+        }
     }
 }

@@ -16,12 +16,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +42,7 @@ public class AuthenticationService {
         user.setLastName(request.getLastname());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRoles(Set.of(rolUser));
+        user.getRoles().add(rolUser);
         var userPersist = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);

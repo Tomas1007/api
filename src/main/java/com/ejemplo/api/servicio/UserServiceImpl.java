@@ -5,7 +5,9 @@ import com.ejemplo.api.dto.UserListDto;
 import com.ejemplo.api.dto.UserUpdDto;
 import com.ejemplo.api.entidades.Rol;
 import com.ejemplo.api.entidades.User;
+import com.ejemplo.api.repository.RolRepository;
 import com.ejemplo.api.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +24,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    private final RolRepository rolRepository;
     @Override
     public UserUpdDto actualizarUser(Integer id, UserUpdDto userUpdDto) {
         try{
@@ -101,4 +106,24 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("No se pudo listar los datos del usuario");
         }
     }
+    @Transactional
+    public UserListDto actualizarUserRol (Integer idUser, Integer idRol){
+        if(idRol == null){
+            throw new IllegalArgumentException("Rol no encontrado");
+        }
+        Rol rolRepo = rolRepository.findById(idRol)
+                .orElseThrow(()-> new NoSuchElementException("Rol no encontrado"));
+        User user = userRepository.findById(idUser)
+                .orElseThrow(()-> new NoSuchElementException("Id rol no encontrado"));
+        user.getRoles().add(rolRepo);
+        var userSave = userRepository.save(user);
+        return new UserListDto(
+                userSave.getId(),
+                userSave.getName(),
+                userSave.getLastName(),
+                userSave.getEmail(),
+                userSave.getRoles().stream().map(Rol::getNombreRol).collect(Collectors.toList())
+        );
+    }
+
 }

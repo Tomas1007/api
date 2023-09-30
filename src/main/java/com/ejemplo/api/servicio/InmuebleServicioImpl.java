@@ -39,6 +39,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
         inmueble.setDescripcion(inmuebleGuardarDto.descripcion());
         inmueble.setNombre(inmuebleGuardarDto.nombre());
         inmueble.setFechaCreacion(inmuebleGuardarDto.fechaCreacion());
+        inmueble.setPrecio(inmuebleGuardarDto.precio());
         inmueble.setPileta(inmuebleGuardarDto.pileta());
         inmueble.setParrilla(inmuebleGuardarDto.parrilla());
         inmueble.setUser(user);
@@ -52,6 +53,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                     inmueble.getNombre(),
                     inmueble.getDescripcion(),
                     inmueble.getFechaCreacion(),
+                    inmueble.getPrecio(),
                     inmueble.isPileta(),
                     inmueble.isParrilla(),
                     userDto
@@ -75,6 +77,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                              i.getNombre(),
                              i.getDescripcion(),
                              i.getFechaCreacion(),
+                             i.getPrecio(),
                              i.isPileta(),
                              i.isParrilla(),
                              i.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
@@ -141,6 +144,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getNombre(),
                             i.getDescripcion(),
                             i.getFechaCreacion(),
+                            i.getPrecio(),
                             i.isPileta(),
                             i.isParrilla(),
                             i.getImagenes().stream()
@@ -169,6 +173,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getNombre(),
                             i.getDescripcion(),
                             i.getFechaCreacion(),
+                            i.getPrecio(),
                             i.isPileta(),
                             i.isParrilla(),
                             i.getImagenes().stream()

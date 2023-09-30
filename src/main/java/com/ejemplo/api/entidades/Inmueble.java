@@ -4,9 +4,11 @@ package com.ejemplo.api.entidades;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +29,8 @@ public class Inmueble implements Serializable {
     private String descripcion;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaCreacion;
+    @NumberFormat(pattern = "###.##")
+    private BigDecimal precio;
     private boolean pileta;
     private boolean parrilla;
 
