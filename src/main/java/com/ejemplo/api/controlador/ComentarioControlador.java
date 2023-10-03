@@ -24,17 +24,17 @@ public class ComentarioControlador {
         return ResponseEntity.ok(comentarioServicio.listarComentarios(inmuebleId, page, size));
     }
     @PutMapping("/user/inmueble")
-    public ResponseEntity<ComentarioDto> comentarioUpd(@RequestParam("userId") Integer userId,
+    public ResponseEntity<ComentarioDto> comentarioUpd(@RequestParam("email") String email,
                                                         @RequestParam("inmuebleId")Integer inmuebleId,
                                                     @RequestBody ComentarioUpd comentarioUpd){
-        return new ResponseEntity<>(comentarioServicio.actualizarComentario(userId, inmuebleId, comentarioUpd), HttpStatus.OK);
+        return new ResponseEntity<>(comentarioServicio.actualizarComentario(email, inmuebleId, comentarioUpd), HttpStatus.OK);
     }
 
     @PostMapping("/user/inmueble")
     public ResponseEntity<ComentarioDto> crearComentario(@RequestBody ComentarioGuardarDto comentarioGuardar,
-                                                         @RequestParam("userId")Integer userId,
+                                                         @RequestParam("email")String email,
                                                          @RequestParam("inmuebleId")Integer inmuebleId){
-        return ResponseEntity.ok(comentarioServicio.crearComentario(comentarioGuardar, userId, inmuebleId));
+        return ResponseEntity.ok(comentarioServicio.crearComentario(comentarioGuardar, email, inmuebleId));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarComentario(@PathVariable Integer id){

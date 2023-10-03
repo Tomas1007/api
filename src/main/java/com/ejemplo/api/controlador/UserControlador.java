@@ -24,16 +24,16 @@ public class UserControlador {
         List<UserListDto> userListDto = userServiceImpl.listarUsers(page, size);
         return ResponseEntity.ok(userListDto);
     }
-    @GetMapping("/{id}")
+    @GetMapping("/{email}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<UserListDto> listarUsuarioPorId(@PathVariable("id")Integer id){
-        return ResponseEntity.ok(userServiceImpl.buscarUserPorId(id));
+    public ResponseEntity<UserListDto> listarUsuarioPorEmail(@PathVariable("email")String email){
+        return ResponseEntity.ok(userServiceImpl.buscarUserPorEmail(email));
     }
-    @PutMapping
+    @PutMapping("/{email}")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    public ResponseEntity<UserUpdDto> actualizarUser(@PathVariable("id")Integer id,
+    public ResponseEntity<UserUpdDto> actualizarUser(@PathVariable("email")String email,
                                                      @RequestBody UserUpdDto userUpdDto){
-        return ResponseEntity.ok( userServiceImpl.actualizarUser(id, userUpdDto));
+        return ResponseEntity.ok( userServiceImpl.actualizarUser(email, userUpdDto));
     }
     @PutMapping("/{idUser}/rol/{idRol}")
     @PreAuthorize("hasAuthority('USER')")

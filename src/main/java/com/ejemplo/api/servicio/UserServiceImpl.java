@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService {
 
     private final RolRepository rolRepository;
     @Override
-    public UserUpdDto actualizarUser(Integer id, UserUpdDto userUpdDto) {
+    public UserUpdDto actualizarUser(String email, UserUpdDto userUpdDto) {
         try{
-            if(id == null){
+            if(email.isEmpty()){
                 throw new IllegalArgumentException("Ingrese un id valido");
             }
-            User user = userRepository.findById(id)
+            User user = userRepository.findByEmail(email)
                     .orElseThrow(()-> new NoSuchElementException("No existe el usuario"));
             user.setName(userUpdDto.name());
             user.setLastName(userUpdDto.lastname());
@@ -86,12 +86,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserListDto buscarUserPorId(Integer id) {
+    public UserListDto buscarUserPorEmail(String email) {
         try{
-            if(id == null){
+            if(email.isEmpty()){
                 throw new IllegalArgumentException("Ingrese un id valido");
             }
-            User user = userRepository.findById(id)
+            User user = userRepository.findByEmail(email)
                     .orElseThrow(()-> new NoSuchElementException("No se ah encontrado el usuario"));
             return new UserListDto(
                     user.getId(),

@@ -70,12 +70,12 @@ public class InmuebleControlador {
     }
     @PostMapping("/user")
     public ResponseEntity<?> crearInmueble(@RequestBody InmuebleGuardarDto inmuebleGuardarDto,
-                                           @RequestParam("userId") Integer userId){
-        return new ResponseEntity<>(inmuebleServicioImpl.guardar(inmuebleGuardarDto, userId), HttpStatus.CREATED);
+                                           @RequestParam("email") String email){
+        return new ResponseEntity<>(inmuebleServicioImpl.guardar(inmuebleGuardarDto, email), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InmuebleUpdDto> actualizar(@PathVariable("id") Integer id, @RequestBody Inmueble inmueble){
+    public ResponseEntity<InmuebleUpdDto> actualizar(@PathVariable("id")Integer id, @RequestBody Inmueble inmueble){
          InmuebleUpdDto usuarioUpd = inmuebleServicioImpl.actualizar(id, inmueble);
         return ResponseEntity.ok(usuarioUpd);
 

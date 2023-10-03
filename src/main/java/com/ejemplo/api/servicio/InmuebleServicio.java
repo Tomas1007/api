@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface InmuebleServicio {
 
-    InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, Integer userId);
+    InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, String email);
 
 
     List<InmuebleAllDto> listarTodo(int page, int size);

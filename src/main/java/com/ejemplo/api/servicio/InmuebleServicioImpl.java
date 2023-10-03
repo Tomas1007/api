@@ -28,12 +28,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
     private final UserRepository userRepository;
 
     @Override
-    public InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, Integer userId) {
+    public InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, String email) {
         try{
-        if (userId == null) {
+        if (email.isEmpty()) {
             throw new IllegalArgumentException("Ingrese un id valido");
         }
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException(("No se ha encontrado el usuario ")));
         Inmueble inmueble = new Inmueble();
         inmueble.setDescripcion(inmuebleGuardarDto.descripcion());

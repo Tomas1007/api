@@ -36,13 +36,13 @@ public class ComentarioServicioImpl implements ComentarioServicio{
 
     @Transactional
     @Override
-    public ComentarioDto crearComentario(ComentarioGuardarDto comentarioGuardarDto, Integer userId, Integer inmuebleId) {
+    public ComentarioDto crearComentario(ComentarioGuardarDto comentarioGuardarDto, String email, Integer inmuebleId) {
        try {
 
-           if (userId == null || inmuebleId == null) {
+           if (email.isEmpty()|| inmuebleId == null) {
                throw new IllegalArgumentException("Usuario e inmueble invalidos");
            }
-           User user = userRepository.findById(userId)
+           User user = userRepository.findByEmail(email)
                    .orElseThrow(() -> new NoSuchElementException("No se ha encontrado un usuario valido"));
            Inmueble inmueble = inmuebleRepo.findById(inmuebleId)
                    .orElseThrow(() -> new NoSuchElementException("No se ha encontrado un inmueble valido"));
@@ -68,13 +68,13 @@ public class ComentarioServicioImpl implements ComentarioServicio{
     }
 
     @Override
-    public ComentarioDto actualizarComentario(Integer idUser, Integer inmuebleId, ComentarioUpd comentarioUpd) {
+    public ComentarioDto actualizarComentario(String email, Integer inmuebleId, ComentarioUpd comentarioUpd) {
        try {
 
-           if (idUser == null || inmuebleId == null) {
+           if (email.isEmpty() || inmuebleId == null) {
                throw new IllegalArgumentException("Ingrese valores reales");
            }
-           User user = userRepository.findById(idUser)
+           User user = userRepository.findByEmail(email)
                    .orElseThrow(() -> new NoSuchElementException("No se ha encontrado un usuario valido"));
            Inmueble inmueble = inmuebleRepo.findById(inmuebleId)
                    .orElseThrow(() -> new NoSuchElementException("No se ha encontrado un inmueble valido"));

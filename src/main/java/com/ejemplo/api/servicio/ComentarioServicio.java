@@ -9,9 +9,9 @@ import com.ejemplo.api.dto.ComentarioUpd;
 public interface ComentarioServicio {
 
 
-    ComentarioDto crearComentario(ComentarioGuardarDto comentarioGuardarDto, Integer userId, Integer inmuebleId);
+    ComentarioDto crearComentario(ComentarioGuardarDto comentarioGuardarDto, String email, Integer inmuebleId);
 
-    ComentarioDto actualizarComentario(Integer idUser, Integer inmuebleId, ComentarioUpd comentarioUpd);
+    ComentarioDto actualizarComentario(String email, Integer inmuebleId, ComentarioUpd comentarioUpd);
 
     void eliminarComentario(Integer idComentario);
 
