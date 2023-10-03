@@ -35,11 +35,11 @@ public class UserControlador {
                                                      @RequestBody UserUpdDto userUpdDto){
         return ResponseEntity.ok( userServiceImpl.actualizarUser(email, userUpdDto));
     }
-    @PutMapping("/{idUser}/rol/{idRol}")
+    @PutMapping("/{email}/rol/{idRol}")
     @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<UserListDto> actualizarUserRol(@PathVariable("idUser")Integer idUser,
-                                                           @PathVariable("idRol")Integer idRol){
-        return ResponseEntity.ok( userServiceImpl.actualizarUserRol(idUser,idRol));
+    public ResponseEntity<UserListDto> actualizarUserRol(@RequestParam("email")String email,
+                                                           @RequestParam("idRol")Integer idRol){
+        return ResponseEntity.ok( userServiceImpl.actualizarUserRol(email,idRol));
     }
 
     @DeleteMapping("/{id}")

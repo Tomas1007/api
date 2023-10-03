@@ -107,13 +107,13 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Transactional
-    public UserListDto actualizarUserRol (Integer idUser, Integer idRol){
-        if(idRol == null){
+    public UserListDto actualizarUserRol (String email, Integer idRol){
+        if(email.isEmpty()){
             throw new IllegalArgumentException("Rol no encontrado");
         }
         Rol rolRepo = rolRepository.findById(idRol)
                 .orElseThrow(()-> new NoSuchElementException("Rol no encontrado"));
-        User user = userRepository.findById(idUser)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(()-> new NoSuchElementException("Id rol no encontrado"));
         user.getRoles().add(rolRepo);
         var userSave = userRepository.save(user);
