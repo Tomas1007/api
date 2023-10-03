@@ -130,13 +130,11 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo eliminar el inmueble");
         }
     }
-    public List<InmuebleAllDto> buscarPorPileta(boolean pileta, int page,int size){
+    public List<InmuebleAllDto> buscarPorPileta(int page, int size){
         try{
-            if(!pileta){
-               throw new IllegalArgumentException("No se encontro inmuebles con pileta");
-            }
+
             Pageable pageable = PageRequest.of(page, size);
-            Page<Inmueble> inmuebles = inmuebleRepo.findByPileta(pileta, pageable);
+            Page<Inmueble> inmuebles = inmuebleRepo.findByPileta(true, pageable);
 
             return inmuebles.getContent().stream()
                     .map(i -> new InmuebleAllDto(
@@ -158,13 +156,10 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo listar inmuebles con pileta");
         }
     }
-    public List<InmuebleAllDto> buscarPorParrilla(boolean parrilla, int page, int size) {
+    public List<InmuebleAllDto> buscarPorParrilla(int page, int size) {
         try {
-            if (!parrilla) {
-                throw new IllegalArgumentException("No se encontro inmuebles con parrilla");
-            }
             Pageable pageable = PageRequest.of(page, size);
-            Page<Inmueble> inmuebles = inmuebleRepo.findByParrilla(parrilla, pageable);
+            Page<Inmueble> inmuebles = inmuebleRepo.findByParrilla(true, pageable);
 
             return inmuebles.getContent()
                     .stream()
@@ -186,5 +181,29 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo listar inmuebles con parrilla");
         }
     }
+    public List<InmuebleAllDto> buscarPorParrillaYPileta(int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Inmueble> inmuebles = inmuebleRepo.findByParrillaAndPileta(true,true, pageable);
 
+            return inmuebles.getContent()
+                    .stream()
+                    .map(i -> new InmuebleAllDto(
+                            i.getId(),
+                            i.getNombre(),
+                            i.getDescripcion(),
+                            i.getFechaCreacion(),
+                            i.getPrecio(),
+                            i.isPileta(),
+                            i.isParrilla(),
+                            i.getImagenes().stream()
+                                    .map(Imagen::getFilePath).collect(Collectors.toList()),
+                            i.getComentarios().stream()
+                                    .map(Comentario::getContenido).collect(Collectors.toList()),
+                            i.getUser().getName())).toList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo listar inmuebles con parrilla y pileta");
+        }
+    }
 }

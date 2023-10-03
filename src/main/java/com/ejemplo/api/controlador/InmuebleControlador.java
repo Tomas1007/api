@@ -34,17 +34,21 @@ public class InmuebleControlador {
         return new ResponseEntity<>(inmuebles, HttpStatus.OK);
     }
     @GetMapping("/pileta")
-    public ResponseEntity<List<InmuebleAllDto>> buscarPorPileta(@RequestParam(value = "pileta")boolean pileta,
-                                                                @RequestParam(value = "page",defaultValue = "0", required = false)int page,
+    public ResponseEntity<List<InmuebleAllDto>> buscarPorPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
                                                                 @RequestParam(value = "size",defaultValue = "10", required = false)int size){
-        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorPileta(pileta, page, size);
+        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorPileta(page, size);
         return ResponseEntity.ok(inmuebleAllDtoList);
     }
     @GetMapping("/parrilla")
-    public ResponseEntity<List<InmuebleAllDto>> buscarPorParrilla(@RequestParam(value= "parrilla")boolean parrilla,
-                                                                  @RequestParam(value = "page",defaultValue = "0", required = false)int page,
+    public ResponseEntity<List<InmuebleAllDto>> buscarPorParrilla(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
                                                                   @RequestParam(value = "size",defaultValue = "10", required = false)int size){
-        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrilla(parrilla, page, size);
+        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrilla(page, size);
+        return ResponseEntity.ok(inmuebleAllDtoList);
+    }
+    @GetMapping("/parrilla-pileta")
+    public ResponseEntity<List<InmuebleAllDto>> buscarPorParrillaYPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
+                                                                         @RequestParam(value = "size",defaultValue = "10", required = false)int size){
+        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrillaYPileta(page, size);
         return ResponseEntity.ok(inmuebleAllDtoList);
     }
     @GetMapping("/{id}")
@@ -82,10 +86,4 @@ public class InmuebleControlador {
         inmuebleServicioImpl.eliminar(id);
        return ResponseEntity.noContent().build();
     }
-
-   /* @GetMapping
-    public ResponseEntity<List<InmuebleAllDto>> buscarPorParrillaYPileta(@RequestParam("parrilla")boolean parrilla,
-                                                                         @RequestParam("pileta")boolean pileta) {
-        return ResponseEntity.ok(inmuebleServicioImpl.buscarPorPiletaYParrilla(parrilla, pileta));
-    }*/
 }
