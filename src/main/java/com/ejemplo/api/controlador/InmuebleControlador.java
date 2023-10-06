@@ -22,16 +22,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InmuebleControlador {
 
-
     private final InmuebleRepo inmuebleRepo;
 
     private final InmuebleServicioImpl inmuebleServicioImpl;
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<?>>listar(@RequestParam(defaultValue = "0")int page,
-                                         @RequestParam(defaultValue = "10")int size){
+    public ResponseEntity<List<InmuebleAllDto>>listarTodo(@RequestParam(defaultValue = "0")int page,
+                                                          @RequestParam(defaultValue = "10")int size){
         List<InmuebleAllDto> inmuebles = inmuebleServicioImpl.listarTodo(page, size);
         return new ResponseEntity<>(inmuebles, HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<InmuebleAllDto>listarPorId(@RequestParam("id")Integer id){
+
+       return ResponseEntity.ok(inmuebleServicioImpl.listarPorId(id));
     }
     @GetMapping("/pileta")
     public ResponseEntity<List<InmuebleAllDto>> buscarPorPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,

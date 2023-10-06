@@ -28,6 +28,32 @@ public class InmuebleServicioImpl implements InmuebleServicio{
     private final UserRepository userRepository;
 
     @Override
+    public InmuebleAllDto listarPorId(Integer id) {
+        try {
+            if (id == null) {
+                throw new IllegalArgumentException("Ingrese un id valido");
+            }
+            Inmueble inmueble = inmuebleRepo.findById(id)
+                    .orElseThrow(() -> new NoSuchElementException("No se encontro el inmueble"));
+            return new InmuebleAllDto(
+                    inmueble.getId(),
+                    inmueble.getNombre(),
+                    inmueble.getDescripcion(),
+                    inmueble.getFechaCreacion(),
+                    inmueble.getPrecio(),
+                    inmueble.isPileta(),
+                    inmueble.isParrilla(),
+                    inmueble.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
+                    inmueble.getComentarios().stream().map(Comentario::getContenido).collect(Collectors.toList()),
+                    inmueble.getUser().getName()
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo buscar por ID");
+        }
+    }
+
+    @Override
     public InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, String email) {
         try{
         if (email.isEmpty()) {
@@ -89,6 +115,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo listar los inmuebles");
         }
     }
+    
 
     @Override()
     public InmuebleUpdDto actualizar(Integer id, Inmueble inmueble){

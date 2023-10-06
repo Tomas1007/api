@@ -25,7 +25,7 @@ public class UserControlador {
         return ResponseEntity.ok(userListDto);
     }
     @GetMapping("/{email}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN', 'USER')")
     public ResponseEntity<UserListDto> listarUsuarioPorEmail(@PathVariable("email")String email){
         return ResponseEntity.ok(userServiceImpl.buscarUserPorEmail(email));
     }

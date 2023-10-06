@@ -13,8 +13,9 @@ public interface InmuebleServicio {
 
     InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, String email);
 
-
     List<InmuebleAllDto> listarTodo(int page, int size);
+
+    InmuebleAllDto listarPorId(Integer id);
 
     InmuebleUpdDto actualizar(Integer id, Inmueble inmueble);
 
