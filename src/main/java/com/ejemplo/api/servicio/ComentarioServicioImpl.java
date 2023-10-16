@@ -2,10 +2,11 @@ package com.ejemplo.api.servicio;
 
 import com.ejemplo.api.dto.ComentarioDto;
 import com.ejemplo.api.dto.ComentarioGuardarDto;
+
 import com.ejemplo.api.dto.ComentarioListDto;
 import com.ejemplo.api.dto.ComentarioUpd;
 import com.ejemplo.api.entidades.Comentario;
-import com.ejemplo.api.entidades.Imagen;
+
 import com.ejemplo.api.entidades.Inmueble;
 import com.ejemplo.api.entidades.User;
 import com.ejemplo.api.repository.ComentarioRepo;
@@ -108,43 +109,26 @@ public class ComentarioServicioImpl implements ComentarioServicio{
        }
     }
 
-    @Override
-    public ComentarioListDto listarComentarios(Integer inmuebleId, int page, int size) {
-        try {
-            if (inmuebleId == null) {
-                throw new IllegalArgumentException("Ingrese un id valido");
-            }
-            Inmueble inmueble = inmuebleRepo.findById(inmuebleId)
-                    .orElseThrow(()-> new NoSuchElementException("No se ah encontrado el inmueble"));
+   public Page<ComentarioListDto> listarComentariosInmueble(Integer inmuebleId, int page, int size) {
+       if (inmuebleId == null) {
+           throw new IllegalArgumentException("Ingrese un ID de inmueble válido");
+       }
+       Inmueble inmueble = inmuebleRepo.findById(inmuebleId)
+               .orElseThrow(() -> new NoSuchElementException("No se encontró el inmueble con el ID proporcionado"));
+       Pageable pageable = PageRequest.of(page, size);
+       Page<Comentario> comentariosPage = comentarioRepo.findByInmueble(inmueble, pageable);
 
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Comentario> comentarioPage = comentarioRepo.findByInmueble(inmueble.getId(), pageable);
+       Page<ComentarioListDto> comentarios = comentariosPage
+                .map(c -> new ComentarioListDto(
+                        c.getContenido(),
+                        c.getFechaCreacion(),
+                        c.getUser().getName()
+                ));
+        return comentarios;
 
-            List<String> filePath = inmueble.getImagenes().stream()
-                    .map(Imagen::getFilePath).collect(Collectors.toList());
-            List<String> comentarios = comentarioPage.getContent().stream()
-                    .map(Comentario::getContenido).collect(Collectors.toList());
-
-            List<Date> fecha = comentarioPage.getContent()
-                    .stream().map(Comentario::getFechaCreacion).collect(Collectors.toList());
-            List<String> nombreUser = comentarioPage.getContent()
-                    .stream().map(comentario -> comentario.getUser().getName()).collect(Collectors.toList());
-
-
-            return new ComentarioListDto(
-                    inmueble.getNombre(),
-                    filePath,
-                    comentarios,
-                    fecha,
-                    nombreUser
-            );
-        }catch(IllegalArgumentException | NoSuchElementException e){
-            e.printStackTrace();
-            throw new RuntimeException("No se puede listar los comentarios");
-        }
+   }
 
 
     }
 
 
-}

@@ -1,10 +1,16 @@
 package com.ejemplo.api.controlador;
 
+import com.ejemplo.api.entidades.Comentario;
 import com.ejemplo.api.entidades.Imagen;
 
+import com.ejemplo.api.entidades.Inmueble;
+import com.ejemplo.api.repository.ComentarioRepo;
 import com.ejemplo.api.repository.InmuebleRepo;
 import com.ejemplo.api.servicio.ImagenServicioImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
-
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/imagen")
@@ -22,7 +27,6 @@ public class ImagenControlador {
 
 
     private final InmuebleRepo inmuebleRepo;
-
     private final ImagenServicioImpl imagenServicioImpl;
 
     @PostMapping

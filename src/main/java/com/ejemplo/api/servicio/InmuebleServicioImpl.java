@@ -90,15 +90,41 @@ public class InmuebleServicioImpl implements InmuebleServicio{
     }
 
     }
-    @Override
+
     public List<InmuebleAllDto> listarTodo(int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<Inmueble> inmuebles = inmuebleRepo.findAll(pageable);
 
             return inmuebles.getContent()
+                    .stream()
+                    .map(i -> new InmuebleAllDto(
+                            i.getId(),
+                            i.getNombre(),
+                            i.getDescripcion(),
+                            i.getFechaCreacion(),
+                            i.getPrecio(),
+                            i.isPileta(),
+                            i.isParrilla(),
+                            i.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
+                            i.getComentarios().stream().map(Comentario::getContenido).toList(),
+                            i.getUser().getName()
+                    )).toList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo listar los inmuebles");
+        }
+    }
+
+    @Override
+    public List<InmuebleSinComentariosDto> listarTodoSinComentarios(int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Inmueble> inmuebles = inmuebleRepo.findAll(pageable);
+
+            return inmuebles.getContent()
                      .stream()
-                     .map(i -> new InmuebleAllDto(
+                     .map(i -> new InmuebleSinComentariosDto(
                              i.getId(),
                              i.getNombre(),
                              i.getDescripcion(),
@@ -107,7 +133,6 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                              i.isPileta(),
                              i.isParrilla(),
                              i.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
-                             i.getComentarios().stream().map(Comentario::getContenido).collect(Collectors.toList()),
                              i.getUser().getName()
                      )).toList();
         } catch (Exception e) {
@@ -157,6 +182,8 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo eliminar el inmueble");
         }
     }
+  //  public
+
     public List<InmuebleAllDto> buscarPorPileta(int page, int size){
         try{
 
