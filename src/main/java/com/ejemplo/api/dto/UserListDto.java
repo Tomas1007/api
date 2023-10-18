@@ -6,6 +6,7 @@ public record UserListDto(
         String name,
         String lastname,
         String email,
+        Long phoneNumber,
         List<String> nombreRol
 ) {
 }

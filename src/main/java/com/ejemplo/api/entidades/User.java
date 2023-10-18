@@ -32,6 +32,8 @@ import java.util.stream.Collectors;
         private String email;
         @Column(name= "contrasenia")
         private String password;
+
+        private Long phoneNumber;
         @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
         @JoinTable(name = "users_rol",
                 joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

@@ -1,10 +1,10 @@
 package com.ejemplo.api.dto;
 
 public record InmuebleUpdDto(
-        String nombre,
+        String titulo,
         String descripcion,
-        boolean pileta,
-        boolean parrilla,
+        String localidad,
+        String ubicacion,
         UserDto userDto
 ) {
 }

@@ -37,10 +37,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                     .orElseThrow(() -> new NoSuchElementException("No se encontro el inmueble"));
             return new InmuebleAllDto(
                     inmueble.getId(),
-                    inmueble.getNombre(),
+                    inmueble.getTitulo(),
                     inmueble.getDescripcion(),
                     inmueble.getFechaCreacion(),
                     inmueble.getPrecio(),
+                    inmueble.getLocalidad(),
+                    inmueble.getUbicacion(),
                     inmueble.isPileta(),
                     inmueble.isParrilla(),
                     inmueble.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
@@ -63,11 +65,13 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                 .orElseThrow(() -> new NoSuchElementException(("No se ha encontrado el usuario ")));
         Inmueble inmueble = new Inmueble();
         inmueble.setDescripcion(inmuebleGuardarDto.descripcion());
-        inmueble.setNombre(inmuebleGuardarDto.nombre());
+        inmueble.setTitulo(inmuebleGuardarDto.titulo());
         inmueble.setFechaCreacion(inmuebleGuardarDto.fechaCreacion());
         inmueble.setPrecio(inmuebleGuardarDto.precio());
         inmueble.setPileta(inmuebleGuardarDto.pileta());
         inmueble.setParrilla(inmuebleGuardarDto.parrilla());
+        inmueble.setLocalidad(inmuebleGuardarDto.localidad());
+        inmueble.setUbicacion(inmuebleGuardarDto.ubicacion());
         inmueble.setUser(user);
         UserDto userDto = new UserDto(
                 user.getName(),
@@ -76,10 +80,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
         );
         inmuebleRepo.save(inmueble);
             return new InmuebleDto(
-                    inmueble.getNombre(),
+                    inmueble.getTitulo(),
                     inmueble.getDescripcion(),
                     inmueble.getFechaCreacion(),
                     inmueble.getPrecio(),
+                    inmueble.getLocalidad(),
+                    inmueble.getUbicacion(),
                     inmueble.isPileta(),
                     inmueble.isParrilla(),
                     userDto
@@ -100,10 +106,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                     .stream()
                     .map(i -> new InmuebleAllDto(
                             i.getId(),
-                            i.getNombre(),
+                            i.getTitulo(),
                             i.getDescripcion(),
                             i.getFechaCreacion(),
                             i.getPrecio(),
+                            i.getLocalidad(),
+                            i.getUbicacion(),
                             i.isPileta(),
                             i.isParrilla(),
                             i.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
@@ -126,10 +134,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                      .stream()
                      .map(i -> new InmuebleSinComentariosDto(
                              i.getId(),
-                             i.getNombre(),
+                             i.getTitulo(),
                              i.getDescripcion(),
                              i.getFechaCreacion(),
                              i.getPrecio(),
+                             i.getLocalidad(),
+                             i.getUbicacion(),
                              i.isPileta(),
                              i.isParrilla(),
                              i.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
@@ -150,15 +160,19 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             }
             Inmueble inmuebleExistente = inmuebleRepo.findById(id)
                     .orElseThrow(() -> new NoSuchElementException("No se ha encontrado el inmueble"));
+            inmuebleExistente.setTitulo(inmueble.getTitulo());
             inmuebleExistente.setDescripcion(inmueble.getDescripcion());
+            inmuebleExistente.setPrecio(inmueble.getPrecio());
+            inmuebleExistente.setLocalidad(inmueble.getLocalidad());
+            inmuebleExistente.setUbicacion(inmueble.getUbicacion());
 
             UserDto userDto = new UserDto(inmuebleExistente.getUser().getName(),
                     inmuebleExistente.getUser().getLastName(),
                     inmuebleExistente.getUser().getEmail());
-            InmuebleUpdDto inmuebleUpdDto = new InmuebleUpdDto(inmuebleExistente.getNombre(),
+            InmuebleUpdDto inmuebleUpdDto = new InmuebleUpdDto(inmuebleExistente.getTitulo(),
                     inmuebleExistente.getDescripcion(),
-                    inmuebleExistente.isPileta(),
-                    inmuebleExistente.isParrilla(),
+                    inmuebleExistente.getLocalidad(),
+                    inmuebleExistente.getUbicacion(),
                     userDto);
             inmuebleRepo.save(inmuebleExistente);
             return inmuebleUpdDto;
@@ -193,10 +207,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             return inmuebles.getContent().stream()
                     .map(i -> new InmuebleAllDto(
                             i.getId(),
-                            i.getNombre(),
+                            i.getTitulo(),
                             i.getDescripcion(),
                             i.getFechaCreacion(),
                             i.getPrecio(),
+                            i.getLocalidad(),
+                            i.getUbicacion(),
                             i.isPileta(),
                             i.isParrilla(),
                             i.getImagenes().stream()
@@ -219,10 +235,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                     .stream()
                     .map(i -> new InmuebleAllDto(
                             i.getId(),
-                            i.getNombre(),
+                            i.getTitulo(),
                             i.getDescripcion(),
                             i.getFechaCreacion(),
                             i.getPrecio(),
+                            i.getLocalidad(),
+                            i.getUbicacion(),
                             i.isPileta(),
                             i.isParrilla(),
                             i.getImagenes().stream()
@@ -244,10 +262,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                     .stream()
                     .map(i -> new InmuebleAllDto(
                             i.getId(),
-                            i.getNombre(),
+                            i.getTitulo(),
                             i.getDescripcion(),
                             i.getFechaCreacion(),
                             i.getPrecio(),
+                            i.getLocalidad(),
+                            i.getUbicacion(),
                             i.isPileta(),
                             i.isParrilla(),
                             i.getImagenes().stream()

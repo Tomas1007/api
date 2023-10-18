@@ -37,11 +37,13 @@ public class UserServiceImpl implements UserService {
             user.setName(userUpdDto.name());
             user.setLastName(userUpdDto.lastname());
             user.setEmail(userUpdDto.email());
+            user.setPhoneNumber(userUpdDto.phoneNumber());
 
             userRepository.save(user);
             return new UserUpdDto(userUpdDto.name(),
                     userUpdDto.lastname(),
-                    userUpdDto.email());
+                    userUpdDto.email(),
+                    userUpdDto.phoneNumber());
 
         }catch(Exception e){
             e.printStackTrace();
@@ -76,6 +78,7 @@ public class UserServiceImpl implements UserService {
                             user.getName(),
                             user.getLastName(),
                             user.getEmail(),
+                            user.getPhoneNumber(),
                             user.getRoles().stream().map(Rol::getNombreRol).collect(Collectors.toList()))
             ).collect(Collectors.toList());
         } catch (Exception e) {
@@ -98,6 +101,7 @@ public class UserServiceImpl implements UserService {
                     user.getName(),
                     user.getLastName(),
                     user.getEmail(),
+                    user.getPhoneNumber(),
                     user.getRoles().stream()
                             .map(Rol::getNombreRol).collect(Collectors.toList())
             );
@@ -122,6 +126,7 @@ public class UserServiceImpl implements UserService {
                 userSave.getName(),
                 userSave.getLastName(),
                 userSave.getEmail(),
+                userSave.getPhoneNumber(),
                 userSave.getRoles().stream().map(Rol::getNombreRol).collect(Collectors.toList())
         );
     }

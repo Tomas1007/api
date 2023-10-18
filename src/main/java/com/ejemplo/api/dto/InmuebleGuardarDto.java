@@ -4,11 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public record InmuebleGuardarDto (
-        String nombre,
+        String titulo,
         String descripcion,
         Date fechaCreacion,
-
         BigDecimal precio,
+        String localidad,
+        String ubicacion,
         boolean pileta,
         boolean parrilla
 ) {

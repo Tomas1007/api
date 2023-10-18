@@ -25,12 +25,14 @@ public class Inmueble implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nombre;
+    private String titulo;
     private String descripcion;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaCreacion;
     @NumberFormat(pattern = "###.##")
     private BigDecimal precio;
+    private String localidad;
+    private String ubicacion;
     private boolean pileta;
     private boolean parrilla;
 

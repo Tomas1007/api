@@ -55,7 +55,7 @@ public class ComentarioServicioImpl implements ComentarioServicio{
            comentario.setFechaCreacion(comentarioGuardarDto.fechaCreacion());
 
            ComentarioDto comentarioDto = new ComentarioDto(
-                   inmueble.getNombre(),
+                   inmueble.getTitulo(),
                    user.getName(),
                    comentario.getContenido(),
                    comentario.getFechaCreacion());
@@ -85,7 +85,7 @@ public class ComentarioServicioImpl implements ComentarioServicio{
            comentarioExistente.setContenido(comentarioUpd.contenido());
 
            ComentarioDto comentarioDto = new ComentarioDto(
-                   inmueble.getNombre(),
+                   inmueble.getTitulo(),
                    user.getName(),
                    comentarioExistente.getContenido(),
                    comentarioExistente.getFechaCreacion());

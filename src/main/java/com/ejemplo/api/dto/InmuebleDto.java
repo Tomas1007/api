@@ -1,6 +1,6 @@
 package com.ejemplo.api.dto;
 
-import com.ejemplo.api.entidades.User;
+
 
 
 import java.math.BigDecimal;
@@ -8,10 +8,12 @@ import java.util.Date;
 
 
 public record InmuebleDto(
-        String nombre,
+        String titulo,
         String descripcion,
         Date fechaCreacion,
         BigDecimal precio,
+        String locaclidad,
+        String ubicacion,
         boolean pileta,
         boolean parrilla,
         UserDto userDto
