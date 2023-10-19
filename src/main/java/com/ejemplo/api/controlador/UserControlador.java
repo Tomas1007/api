@@ -2,6 +2,7 @@ package com.ejemplo.api.controlador;
 
 import com.ejemplo.api.dto.UserListDto;
 import com.ejemplo.api.dto.UserUpdDto;
+import com.ejemplo.api.entidades.User;
 import com.ejemplo.api.servicio.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +33,13 @@ public class UserControlador {
     @PutMapping("/{email}")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<UserUpdDto> actualizarUser(@PathVariable("email")String email,
-                                                     @RequestBody UserUpdDto userUpdDto){
-        return ResponseEntity.ok( userServiceImpl.actualizarUser(email, userUpdDto));
+                                                     @RequestBody User user){
+        return ResponseEntity.ok( userServiceImpl.actualizarUser(email, user));
     }
     @PutMapping("/{email}/rol/{idRol}")
     @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<UserListDto> actualizarUserRol(@RequestParam("email")String email,
-                                                           @RequestParam("idRol")Integer idRol){
+    public ResponseEntity<UserListDto> actualizarUserRol(@PathVariable("email")String email,
+                                                           @PathVariable("idRol")Integer idRol){
         return ResponseEntity.ok( userServiceImpl.actualizarUserRol(email,idRol));
     }
 

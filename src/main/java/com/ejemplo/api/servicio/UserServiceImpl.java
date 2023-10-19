@@ -27,23 +27,24 @@ public class UserServiceImpl implements UserService {
 
     private final RolRepository rolRepository;
     @Override
-    public UserUpdDto actualizarUser(String email, UserUpdDto userUpdDto) {
+    public UserUpdDto actualizarUser(String email, User user) {
         try{
             if(email.isEmpty()){
                 throw new IllegalArgumentException("Ingrese un id valido");
             }
-            User user = userRepository.findByEmail(email)
+            User userExistente = userRepository.findByEmail(email)
                     .orElseThrow(()-> new NoSuchElementException("No existe el usuario"));
-            user.setName(userUpdDto.name());
-            user.setLastName(userUpdDto.lastname());
-            user.setEmail(userUpdDto.email());
-            user.setPhoneNumber(userUpdDto.phoneNumber());
+            userExistente.setName(user.getName());
+            userExistente.setLastName(user.getLastName());
+            userExistente.setEmail(user.getEmail());
+            userExistente.setPhoneNumber(user.getPhoneNumber());
 
-            userRepository.save(user);
-            return new UserUpdDto(userUpdDto.name(),
-                    userUpdDto.lastname(),
-                    userUpdDto.email(),
-                    userUpdDto.phoneNumber());
+            userRepository.save(userExistente);
+            return new UserUpdDto(
+                    userExistente.getName(),
+                    userExistente.getLastName(),
+                    userExistente.getEmail(),
+                    userExistente.getPhoneNumber());
 
         }catch(Exception e){
             e.printStackTrace();
