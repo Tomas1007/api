@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/inmueble/auth/**")
+                .requestMatchers("/api/inmueble/getAll")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
