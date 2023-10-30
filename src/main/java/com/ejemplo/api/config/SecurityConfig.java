@@ -23,16 +23,19 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
+    private static final String[] WHITE_LIST_URL = {"/api/inmueble/auth/**","/api/inmueble/getAll"};
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
+
+
         http
                 .cors()
                 .disable()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/inmueble/getAll")
+                .requestMatchers(WHITE_LIST_URL)
                 .permitAll()
                 .anyRequest()
                 .authenticated()
