@@ -12,7 +12,7 @@ public record InmuebleDto(
         String descripcion,
         Date fechaCreacion,
         BigDecimal precio,
-        String locaclidad,
+        String localidad,
         String ubicacion,
         boolean pileta,
         boolean parrilla,
