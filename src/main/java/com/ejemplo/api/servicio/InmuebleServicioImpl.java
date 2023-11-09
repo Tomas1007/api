@@ -80,6 +80,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
         );
         inmuebleRepo.save(inmueble);
             return new InmuebleDto(
+                    inmueble.getId(),
                     inmueble.getTitulo(),
                     inmueble.getDescripcion(),
                     inmueble.getFechaCreacion(),

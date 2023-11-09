@@ -8,6 +8,7 @@ import java.util.Date;
 
 
 public record InmuebleDto(
+        Integer id,
         String titulo,
         String descripcion,
         Date fechaCreacion,
