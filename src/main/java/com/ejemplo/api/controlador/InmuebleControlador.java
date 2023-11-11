@@ -42,9 +42,9 @@ public class InmuebleControlador {
 
     //Servicio para traer todos los Inmuebles incluyendo sus comentarios
     @GetMapping("/getAll")
-    public ResponseEntity<List<InmuebleAllDto>>listarTodo(@RequestParam(defaultValue = "0")int page,
+    public ResponseEntity<List<InmuebleWithPortada>>listarTodo(@RequestParam(defaultValue = "0")int page,
                                                                      @RequestParam(defaultValue = "10")int size){
-        List<InmuebleAllDto> inmuebles = inmuebleServicioImpl.listarTodo(page, size);
+        List<InmuebleWithPortada> inmuebles = inmuebleServicioImpl.listarTodo(page, size);
         return new ResponseEntity<>(inmuebles, HttpStatus.OK);
     }
     @GetMapping

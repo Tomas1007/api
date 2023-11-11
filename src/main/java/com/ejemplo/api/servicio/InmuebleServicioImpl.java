@@ -1,10 +1,7 @@
 package com.ejemplo.api.servicio;
 
 import com.ejemplo.api.dto.*;
-import com.ejemplo.api.entidades.Comentario;
-import com.ejemplo.api.entidades.Imagen;
-import com.ejemplo.api.entidades.Inmueble;
-import com.ejemplo.api.entidades.User;
+import com.ejemplo.api.entidades.*;
 import com.ejemplo.api.repository.InmuebleRepo;
 import com.ejemplo.api.repository.UserRepository;
 
@@ -98,14 +95,14 @@ public class InmuebleServicioImpl implements InmuebleServicio{
 
     }
 
-    public List<InmuebleAllDto> listarTodo(int page, int size) {
+    public List<InmuebleWithPortada> listarTodo(int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<Inmueble> inmuebles = inmuebleRepo.findAll(pageable);
 
             return inmuebles.getContent()
                     .stream()
-                    .map(i -> new InmuebleAllDto(
+                    .map(i -> new InmuebleWithPortada(
                             i.getId(),
                             i.getTitulo(),
                             i.getDescripcion(),
@@ -115,7 +112,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getUbicacion(),
                             i.isPileta(),
                             i.isParrilla(),
-                            i.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
+                            i.getImagenPortada().getFilePath(),
                             i.getComentarios().stream().map(Comentario::getContenido).toList(),
                             i.getUser().getName()
                     )).toList();
