@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -112,7 +113,9 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getUbicacion(),
                             i.isPileta(),
                             i.isParrilla(),
-                            i.getImagenPortada().getFilePath(),
+                            Optional.ofNullable(i.getImagenPortada())
+                            .map(ImagenPortada::getFilePath)
+                                    .orElse(null),
                             i.getComentarios().stream().map(Comentario::getContenido).toList(),
                             i.getUser().getName()
                     )).toList();

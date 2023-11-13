@@ -3,6 +3,7 @@ package com.ejemplo.api.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public record InmuebleWithPortada(
         Integer id,
@@ -14,7 +15,7 @@ public record InmuebleWithPortada(
         String ubicacion,
         boolean pileta,
         boolean parrilla,
-        String filePath,
+        String portada,
         List<String> contenido,
         String nombreUsuario
 ) {
