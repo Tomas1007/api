@@ -65,6 +65,13 @@ public class InmuebleControlador {
         List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrilla(page, size);
         return ResponseEntity.ok(inmuebleAllDtoList);
     }
+    @GetMapping("/user/{email}")
+    public ResponseEntity<List<InmuebleAllDto>> buscarPorUserEmail(@PathVariable("email") String email,
+                                                                    @RequestParam(value = "page",defaultValue = "0", required = false)int page,
+                                                                   @RequestParam(value = "size",defaultValue = "10", required = false)int size){
+        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorUserEmail(email, page, size);
+        return ResponseEntity.ok(inmuebleAllDtoList);
+    }
     @GetMapping("/parrilla-pileta")
     public ResponseEntity<List<InmuebleAllDto>> buscarPorParrillaYPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
                                                                          @RequestParam(value = "size",defaultValue = "10", required = false)int size){

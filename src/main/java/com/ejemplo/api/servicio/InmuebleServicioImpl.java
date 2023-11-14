@@ -197,7 +197,33 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo eliminar el inmueble");
         }
     }
-  //  public
+    public List<InmuebleAllDto> buscarPorUserEmail(String email,int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Inmueble> inmuebles = inmuebleRepo.findByUserEmail(email, pageable);
+
+            return inmuebles.getContent()
+                    .stream()
+                    .map(i -> new InmuebleAllDto(
+                            i.getId(),
+                            i.getTitulo(),
+                            i.getDescripcion(),
+                            i.getFechaCreacion(),
+                            i.getPrecio(),
+                            i.getLocalidad(),
+                            i.getUbicacion(),
+                            i.isPileta(),
+                            i.isParrilla(),
+                            i.getImagenes().stream()
+                                    .map(Imagen::getFilePath).collect(Collectors.toList()),
+                            i.getComentarios().stream()
+                                    .map(Comentario::getContenido).collect(Collectors.toList()),
+                            i.getUser().getName())).toList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo listar inmuebles con parrilla");
+        }
+    }
 
     public List<InmuebleAllDto> buscarPorPileta(int page, int size){
         try{
@@ -227,6 +253,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo listar inmuebles con pileta");
         }
     }
+
     public List<InmuebleAllDto> buscarPorParrilla(int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
