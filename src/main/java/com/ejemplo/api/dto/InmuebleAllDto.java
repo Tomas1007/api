@@ -12,8 +12,7 @@ public record InmuebleAllDto(
         BigDecimal precio,
         String localidad,
         String ubicacion,
-        boolean pileta,
-        boolean parrilla,
+
         List<String> filePath,
         List<String> contenido,
         String nombreUsuario

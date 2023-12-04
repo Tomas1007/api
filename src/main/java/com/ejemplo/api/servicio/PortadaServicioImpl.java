@@ -20,7 +20,7 @@ public class PortadaServicioImpl implements ImagenPortadaServicio{
     private final InmuebleRepo inmuebleRepo;
 
     private final ImagenPortadaRepo imagenPortadaRepo;
-    private final String CARPETA_PATH = "C:\\Users\\sbria\\OneDrive\\Escritorio\\imagenPortada\\";
+    private final String CARPETA_PATH = "C:\\Users\\sbria\\OneDrive\\Escritorio\\eventer\\public\\img\\Portadas";
 
 
     @Override

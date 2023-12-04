@@ -9,9 +9,8 @@ public record InmuebleGuardarDto (
         Date fechaCreacion,
         BigDecimal precio,
         String localidad,
-        String ubicacion,
-        boolean pileta,
-        boolean parrilla
+        String ubicacion
+
 ) {
 
 }

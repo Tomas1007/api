@@ -13,8 +13,6 @@ public record InmuebleWithPortada(
         BigDecimal precio,
         String localidad,
         String ubicacion,
-        boolean pileta,
-        boolean parrilla,
         String portada,
         List<String> contenido,
         String nombreUsuario

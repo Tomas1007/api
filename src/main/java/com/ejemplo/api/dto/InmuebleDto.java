@@ -15,8 +15,7 @@ public record InmuebleDto(
         BigDecimal precio,
         String localidad,
         String ubicacion,
-        boolean pileta,
-        boolean parrilla,
+
         UserDto userDto
         ) {
 }

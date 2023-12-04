@@ -47,13 +47,13 @@ public class InmuebleControlador {
         List<InmuebleWithPortada> inmuebles = inmuebleServicioImpl.listarTodo(page, size);
         return new ResponseEntity<>(inmuebles, HttpStatus.OK);
     }
-    @GetMapping
-    public ResponseEntity<InmuebleAllDto>listarPorId(@RequestParam("id")Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<InmuebleAllDto>listarPorId(@PathVariable("id") Integer id) {
 
         return ResponseEntity.ok(inmuebleServicioImpl.listarPorId(id));
     }
 
-    @GetMapping("/pileta")
+    /*@GetMapping("/pileta")
     public ResponseEntity<List<InmuebleAllDto>> buscarPorPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
                                                                 @RequestParam(value = "size",defaultValue = "10", required = false)int size){
         List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorPileta(page, size);
@@ -64,7 +64,7 @@ public class InmuebleControlador {
                                                                   @RequestParam(value = "size",defaultValue = "10", required = false)int size){
         List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrilla(page, size);
         return ResponseEntity.ok(inmuebleAllDtoList);
-    }
+    }*/
     @GetMapping("/user/{email}")
     public ResponseEntity<List<InmuebleAllDto>> buscarPorUserEmail(@PathVariable("email") String email,
                                                                     @RequestParam(value = "page",defaultValue = "0", required = false)int page,
@@ -72,29 +72,13 @@ public class InmuebleControlador {
         List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorUserEmail(email, page, size);
         return ResponseEntity.ok(inmuebleAllDtoList);
     }
-    @GetMapping("/parrilla-pileta")
+   /* @GetMapping("/parrilla-pileta")
     public ResponseEntity<List<InmuebleAllDto>> buscarPorParrillaYPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
                                                                          @RequestParam(value = "size",defaultValue = "10", required = false)int size){
         List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrillaYPileta(page, size);
         return ResponseEntity.ok(inmuebleAllDtoList);
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<InmueblesImagenesDTO> obtenerInmuebleImagenes(@PathVariable("id") Integer id) {
-        try {
-            if (id == null) {
-                throw new IllegalArgumentException("Ingrese un Id valido");
-            }
-            Inmueble inmueble = inmuebleRepo.findById(id)
-                    .orElseThrow(() -> new NoSuchElementException("No se ah encontrado el inmueble"));
-            List<String> pathImagenes = inmueble.getImagenes()
-                    .stream().map(Imagen::getFilePath).collect(Collectors.toList());
-            InmueblesImagenesDTO inmueblesImagenesDTO = new InmueblesImagenesDTO(inmueble, pathImagenes);
-            return ResponseEntity.ok(inmueblesImagenesDTO);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return ResponseEntity.notFound().build();
-    }
+    }*/
+
     @PostMapping("/user")
     public ResponseEntity<?> crearInmueble(@RequestBody InmuebleGuardarDto inmuebleGuardarDto,
                                            @RequestParam("email") String email){

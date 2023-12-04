@@ -10,9 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface InmuebleRepo extends JpaRepository<Inmueble, Integer> {
 
     Page<Inmueble> findByUserEmail(String email, Pageable pageable);
-    Page<Inmueble> findByPileta(boolean pileta ,Pageable pageable);
 
-    Page<Inmueble> findByParrilla(boolean parrilla, Pageable pageable);
-
-    Page<Inmueble> findByParrillaAndPileta(boolean parrilla,boolean pileta, Pageable pageable);
 }

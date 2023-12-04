@@ -27,7 +27,7 @@ public class ImagenServicioImpl implements ImagenServicio {
     private final ImagenRepo imagenRepo;
 
     private final InmuebleRepo inmuebleRepo;
-    private final String CARPETA_PATH = "C:\\Users\\sbria\\OneDrive\\Escritorio\\misImagenes\\";
+    private final String CARPETA_PATH = "C:\\Users\\sbria\\OneDrive\\Escritorio\\eventer\\public\\img";
 
     @Override
     public String subirImagen(MultipartFile[] files, Integer idInmueble) throws IOException {

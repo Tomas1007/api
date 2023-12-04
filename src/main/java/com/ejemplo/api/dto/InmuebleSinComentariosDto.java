@@ -12,8 +12,6 @@ public record InmuebleSinComentariosDto(
         BigDecimal precio,
         String localidad,
         String ubicacion,
-        boolean pileta,
-        boolean parrilla,
         List<String> filePath,
         String nombreUsuario
 ) {

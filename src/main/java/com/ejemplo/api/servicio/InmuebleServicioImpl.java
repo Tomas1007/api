@@ -41,8 +41,6 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                     inmueble.getPrecio(),
                     inmueble.getLocalidad(),
                     inmueble.getUbicacion(),
-                    inmueble.isPileta(),
-                    inmueble.isParrilla(),
                     inmueble.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
                     inmueble.getComentarios().stream().map(Comentario::getContenido).collect(Collectors.toList()),
                     inmueble.getUser().getName()
@@ -57,7 +55,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
     public InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, String email) {
         try{
         if (email.isEmpty()) {
-            throw new IllegalArgumentException("Ingrese un id valido");
+            throw new IllegalArgumentException("Ingrese un email valido");
         }
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException(("No se ha encontrado el usuario ")));
@@ -66,8 +64,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
         inmueble.setTitulo(inmuebleGuardarDto.titulo());
         inmueble.setFechaCreacion(inmuebleGuardarDto.fechaCreacion());
         inmueble.setPrecio(inmuebleGuardarDto.precio());
-        inmueble.setPileta(inmuebleGuardarDto.pileta());
-        inmueble.setParrilla(inmuebleGuardarDto.parrilla());
+
         inmueble.setLocalidad(inmuebleGuardarDto.localidad());
         inmueble.setUbicacion(inmuebleGuardarDto.ubicacion());
         inmueble.setUser(user);
@@ -85,8 +82,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                     inmueble.getPrecio(),
                     inmueble.getLocalidad(),
                     inmueble.getUbicacion(),
-                    inmueble.isPileta(),
-                    inmueble.isParrilla(),
+
                     userDto
             );
     }catch(Exception e){
@@ -111,8 +107,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getPrecio(),
                             i.getLocalidad(),
                             i.getUbicacion(),
-                            i.isPileta(),
-                            i.isParrilla(),
+
                             Optional.ofNullable(i.getImagenPortada())
                             .map(ImagenPortada::getFilePath)
                                     .orElse(null),
@@ -141,8 +136,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                              i.getPrecio(),
                              i.getLocalidad(),
                              i.getUbicacion(),
-                             i.isPileta(),
-                             i.isParrilla(),
+
                              i.getImagenes().stream().map(Imagen::getFilePath).collect(Collectors.toList()),
                              i.getUser().getName()
                      )).toList();
@@ -212,8 +206,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getPrecio(),
                             i.getLocalidad(),
                             i.getUbicacion(),
-                            i.isPileta(),
-                            i.isParrilla(),
+
                             i.getImagenes().stream()
                                     .map(Imagen::getFilePath).collect(Collectors.toList()),
                             i.getComentarios().stream()
@@ -225,7 +218,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
         }
     }
 
-    public List<InmuebleAllDto> buscarPorPileta(int page, int size){
+    /*public List<InmuebleAllDto> buscarPorPileta(int page, int size){
         try{
 
             Pageable pageable = PageRequest.of(page, size);
@@ -307,5 +300,5 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             e.printStackTrace();
             throw new RuntimeException("No se pudo listar inmuebles con parrilla y pileta");
         }
-    }
+    }*/
 }

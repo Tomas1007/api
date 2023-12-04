@@ -33,8 +33,7 @@ public class Inmueble implements Serializable {
     private BigDecimal precio;
     private String localidad;
     private String ubicacion;
-    private boolean pileta;
-    private boolean parrilla;
+
 
     @OneToMany(mappedBy = "inmueble", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Imagen> imagenes = new HashSet<>();
