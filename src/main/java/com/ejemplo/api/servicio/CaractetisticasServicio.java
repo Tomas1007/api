@@ -1,7 +1,7 @@
 package com.ejemplo.api.servicio;
 
 
-import com.ejemplo.api.dto.CaracteristicasGuardar;
+
 import com.ejemplo.api.entidades.Caracteristicas;
 
 

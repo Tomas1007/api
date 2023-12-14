@@ -23,7 +23,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-    private static final String[] WHITE_LIST_URL = {"/api/inmueble/auth/**","/api/inmueble/getAll",
+    private static final String[] WHITE_LIST_URL = {"/api/inmueble/auth/**","/api/inmueble/getAll", "/api/inmueble/{id}",
             "/api/comentario/inmueble"};
 
     @Bean

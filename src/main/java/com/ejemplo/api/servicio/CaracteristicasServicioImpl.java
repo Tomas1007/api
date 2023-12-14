@@ -1,6 +1,5 @@
 package com.ejemplo.api.servicio;
 
-import com.ejemplo.api.dto.CaracteristicasGuardar;
 import com.ejemplo.api.entidades.Caracteristicas;
 import com.ejemplo.api.entidades.Inmueble;
 import com.ejemplo.api.repository.CaracteristicasRepo;
@@ -31,6 +30,7 @@ public class CaracteristicasServicioImpl implements CaractetisticasServicio{
             caracteristicas.setPiscina(caracteristicasGuardar.isPiscina());
             caracteristicas.setWifi(caracteristicasGuardar.isWifi());
             caracteristicas.setParrilla(caracteristicasGuardar.isParrilla());
+            caracteristicas.setTv(caracteristicasGuardar.isTv());
             caracteristicas.setCantidadPersonas(caracteristicasGuardar.getCantidadPersonas());
             caracteristicas.setHabitaciones(caracteristicasGuardar.getHabitaciones());
             caracteristicas.setBanios(caracteristicasGuardar.getBanios());
@@ -47,8 +47,6 @@ public class CaracteristicasServicioImpl implements CaractetisticasServicio{
             if(id == null){
                 throw new IllegalArgumentException("Ingrese un id valido");
             }
-            Inmueble inmueble = inmuebleRepo.findById(id)
-                    .orElseThrow(()-> new NoSuchElementException("No se encontro el inmueble con el Id"));
             List<Caracteristicas> caracteristicasList = caracteristicasRepo.findByInmuebleId(id);
             return caracteristicasList;
         }catch (Exception e){

@@ -1,32 +1,27 @@
 package com.ejemplo.api.entidades;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name= "caracteristicas")
+@Table(name= "calificaciones")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
-public class Caracteristicas {
+public class Calificacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private boolean piscina;
-    private boolean wifi;
-    private boolean parrilla;
-    private boolean tv;
-    private Integer cantidadPersonas;
-    private Integer habitaciones;
-    private Integer banios;
+    private Integer calificacion;
 
     @OneToOne
     @JoinColumn(name = "inmueble_id", referencedColumnName = "id")
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
     @JsonBackReference
     private Inmueble inmueble;
 }
