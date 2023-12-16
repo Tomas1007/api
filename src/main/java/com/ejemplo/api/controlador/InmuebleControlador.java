@@ -53,31 +53,15 @@ public class InmuebleControlador {
         return ResponseEntity.ok(inmuebleServicioImpl.listarPorId(id));
     }
 
-    /*@GetMapping("/pileta")
-    public ResponseEntity<List<InmuebleAllDto>> buscarPorPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
-                                                                @RequestParam(value = "size",defaultValue = "10", required = false)int size){
-        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorPileta(page, size);
-        return ResponseEntity.ok(inmuebleAllDtoList);
-    }
-    @GetMapping("/parrilla")
-    public ResponseEntity<List<InmuebleAllDto>> buscarPorParrilla(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
-                                                                  @RequestParam(value = "size",defaultValue = "10", required = false)int size){
-        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrilla(page, size);
-        return ResponseEntity.ok(inmuebleAllDtoList);
-    }*/
+
     @GetMapping("/user/{email}")
-    public ResponseEntity<List<InmuebleAllDto>> buscarPorUserEmail(@PathVariable("email") String email,
+    public ResponseEntity<List<InmuebleWithPortada>> buscarPorUserEmail(@PathVariable("email") String email,
                                                                     @RequestParam(value = "page",defaultValue = "0", required = false)int page,
                                                                    @RequestParam(value = "size",defaultValue = "10", required = false)int size){
-        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorUserEmail(email, page, size);
+        List<InmuebleWithPortada> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorUserEmail(email, page, size);
         return ResponseEntity.ok(inmuebleAllDtoList);
     }
-   /* @GetMapping("/parrilla-pileta")
-    public ResponseEntity<List<InmuebleAllDto>> buscarPorParrillaYPileta(@RequestParam(value = "page",defaultValue = "0", required = false)int page,
-                                                                         @RequestParam(value = "size",defaultValue = "10", required = false)int size){
-        List<InmuebleAllDto> inmuebleAllDtoList = inmuebleServicioImpl.buscarPorParrillaYPileta(page, size);
-        return ResponseEntity.ok(inmuebleAllDtoList);
-    }*/
+
 
     @PostMapping("/user")
     public ResponseEntity<?> crearInmueble(@RequestBody InmuebleGuardarDto inmuebleGuardarDto,

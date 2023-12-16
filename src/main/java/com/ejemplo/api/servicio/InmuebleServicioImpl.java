@@ -25,6 +25,8 @@ public class InmuebleServicioImpl implements InmuebleServicio{
 
     private final UserRepository userRepository;
 
+    private final CaracteristicasServicioImpl caracteristicasServicio;
+
     @Override
     public InmuebleAllDto listarPorId(Integer id) {
         try {
@@ -92,10 +94,14 @@ public class InmuebleServicioImpl implements InmuebleServicio{
 
     }
 
+
+
     public List<InmuebleWithPortada> listarTodo(int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<Inmueble> inmuebles = inmuebleRepo.findAll(pageable);
+
+            List<Integer> calificacionInmueble = inmuebles.map(Inmueble::getId).stream().toList();
 
             return inmuebles.getContent()
                     .stream()
@@ -107,11 +113,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getPrecio(),
                             i.getLocalidad(),
                             i.getUbicacion(),
-
                             Optional.ofNullable(i.getImagenPortada())
                             .map(ImagenPortada::getFilePath)
                                     .orElse(null),
                             i.getComentarios().stream().map(Comentario::getContenido).toList(),
+                            i.getCaracteristicas().getHabitaciones(),
+                            i.getCaracteristicas().getCantidadPersonas(),
                             i.getUser().getName()
                     )).toList();
         } catch (Exception e) {
@@ -191,14 +198,14 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo eliminar el inmueble");
         }
     }
-    public List<InmuebleAllDto> buscarPorUserEmail(String email,int page, int size) {
+    public List<InmuebleWithPortada> buscarPorUserEmail(String email,int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<Inmueble> inmuebles = inmuebleRepo.findByUserEmail(email, pageable);
 
             return inmuebles.getContent()
                     .stream()
-                    .map(i -> new InmuebleAllDto(
+                    .map(i -> new InmuebleWithPortada(
                             i.getId(),
                             i.getTitulo(),
                             i.getDescripcion(),
@@ -206,11 +213,12 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             i.getPrecio(),
                             i.getLocalidad(),
                             i.getUbicacion(),
-
-                            i.getImagenes().stream()
-                                    .map(Imagen::getFilePath).collect(Collectors.toList()),
-                            i.getComentarios().stream()
-                                    .map(Comentario::getContenido).collect(Collectors.toList()),
+                            Optional.ofNullable(i.getImagenPortada())
+                                    .map(ImagenPortada::getFilePath)
+                                    .orElse(null),
+                            i.getComentarios().stream().map(Comentario::getContenido).toList(),
+                            i.getCaracteristicas().getHabitaciones(),
+                            i.getCaracteristicas().getCantidadPersonas(),
                             i.getUser().getName())).toList();
         } catch (Exception e) {
             e.printStackTrace();

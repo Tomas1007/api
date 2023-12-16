@@ -43,6 +43,12 @@ public class Inmueble implements Serializable {
 
     @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private ImagenPortada imagenPortada;
+
+    @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Caracteristicas caracteristicas;
+
+    @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Calificacion calificacion;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
