@@ -20,7 +20,7 @@ private final CalificacionServicioImpl calificacionServicio;
         return ResponseEntity.ok(promedio);
 }
 @PostMapping
-    public ResponseEntity<Calificacion> enviarCalificacion(@RequestParam("calificacion")Integer calificacion,
+    public ResponseEntity<String> enviarCalificacion(@RequestParam("calificacion")Integer calificacion,
                                                            @RequestParam("idInmueble")Integer idInmueble){
     return ResponseEntity.ok(calificacionServicio.guardar(calificacion,idInmueble));
 }

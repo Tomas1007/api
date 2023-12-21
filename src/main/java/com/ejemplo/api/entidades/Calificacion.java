@@ -4,6 +4,8 @@ package com.ejemplo.api.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name= "calificaciones")
 @AllArgsConstructor
@@ -11,7 +13,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class Calificacion {
+public class Calificacion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

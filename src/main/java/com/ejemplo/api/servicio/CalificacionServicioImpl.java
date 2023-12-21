@@ -4,6 +4,7 @@ import com.ejemplo.api.entidades.Calificacion;
 import com.ejemplo.api.entidades.Inmueble;
 import com.ejemplo.api.repository.CalificacionRepo;
 import com.ejemplo.api.repository.InmuebleRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,9 @@ public class CalificacionServicioImpl implements CalificacionServicio {
     private final InmuebleRepo inmuebleRepo;
     private final CalificacionRepo calificacionRepo;
 
+    @Transactional
     @Override
-    public Calificacion guardar(Integer calificacionResponse, Integer idInmueble) {
+    public String guardar(Integer calificacionResponse, Integer idInmueble) {
         try {
             if (idInmueble == null) {
                 throw new IllegalArgumentException("Ingrese un id valido");
@@ -31,7 +33,8 @@ public class CalificacionServicioImpl implements CalificacionServicio {
             calificacion.setCalificacion(calificacionResponse);
             calificacion.setInmueble(inmueble);
 
-            return calificacionRepo.save(calificacion);
+            calificacionRepo.save(calificacion);
+            return "Calificó el inmuueble correctamente";
         } catch (Exception e) {
             throw new RuntimeException("No se pudo guardar la calificacion");
         }
