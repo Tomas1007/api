@@ -12,7 +12,6 @@ public record InmuebleAllDto(
         BigDecimal precio,
         String localidad,
         String ubicacion,
-
         List<String> filePath,
         List<String> contenido,
         String nombreUsuario

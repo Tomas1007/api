@@ -41,14 +41,14 @@ public class Inmueble implements Serializable {
     @OneToMany(mappedBy = "inmueble", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Comentario> comentarios = new HashSet<>();
 
-    @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL,orphanRemoval = true)
     private ImagenPortada imagenPortada;
 
-    @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL,orphanRemoval = true)
     private Caracteristicas caracteristicas;
 
-    @OneToOne(mappedBy = "inmueble",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Calificacion calificacion;
+    @OneToMany(mappedBy = "inmueble",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Calificacion> calificacion = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

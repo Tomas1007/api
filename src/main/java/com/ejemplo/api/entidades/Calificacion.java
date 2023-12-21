@@ -1,6 +1,6 @@
 package com.ejemplo.api.entidades;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,10 +18,8 @@ public class Calificacion {
     private Integer id;
     private Integer calificacion;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "inmueble_id", referencedColumnName = "id")
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-
-    @JsonBackReference
     private Inmueble inmueble;
 }

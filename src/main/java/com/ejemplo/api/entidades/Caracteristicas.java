@@ -1,6 +1,7 @@
 package com.ejemplo.api.entidades;
 
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +28,7 @@ public class Caracteristicas {
 
     @OneToOne
     @JoinColumn(name = "inmueble_id", referencedColumnName = "id")
+
     @JsonBackReference
     private Inmueble inmueble;
 }

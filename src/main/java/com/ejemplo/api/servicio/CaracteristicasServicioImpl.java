@@ -47,8 +47,10 @@ public class CaracteristicasServicioImpl implements CaractetisticasServicio{
             if(id == null){
                 throw new IllegalArgumentException("Ingrese un id valido");
             }
-            List<Caracteristicas> caracteristicasList = caracteristicasRepo.findByInmuebleId(id);
-            return caracteristicasList;
+            Inmueble inmueble = inmuebleRepo.findById(id)
+                    .orElseThrow(()-> new NoSuchElementException("No se encontro un inmueble con ese Id"));
+
+            return caracteristicasRepo.findByInmueble(inmueble);
         }catch (Exception e){
             throw new RuntimeException("No se pudo listar las caracteristicas");
         }

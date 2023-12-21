@@ -25,8 +25,6 @@ public class InmuebleServicioImpl implements InmuebleServicio{
 
     private final UserRepository userRepository;
 
-    private final CaracteristicasServicioImpl caracteristicasServicio;
-
     @Override
     public InmuebleAllDto listarPorId(Integer id) {
         try {
@@ -101,7 +99,6 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             Pageable pageable = PageRequest.of(page, size);
             Page<Inmueble> inmuebles = inmuebleRepo.findAll(pageable);
 
-            List<Integer> calificacionInmueble = inmuebles.map(Inmueble::getId).stream().toList();
 
             return inmuebles.getContent()
                     .stream()
@@ -117,8 +114,8 @@ public class InmuebleServicioImpl implements InmuebleServicio{
                             .map(ImagenPortada::getFilePath)
                                     .orElse(null),
                             i.getComentarios().stream().map(Comentario::getContenido).toList(),
-                            i.getCaracteristicas().getHabitaciones(),
-                            i.getCaracteristicas().getCantidadPersonas(),
+                            Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getHabitaciones).orElse(null),
+                            Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getCantidadPersonas).orElse(null),
                             i.getUser().getName()
                     )).toList();
         } catch (Exception e) {
@@ -226,87 +223,5 @@ public class InmuebleServicioImpl implements InmuebleServicio{
         }
     }
 
-    /*public List<InmuebleAllDto> buscarPorPileta(int page, int size){
-        try{
 
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Inmueble> inmuebles = inmuebleRepo.findByPileta(true, pageable);
-
-            return inmuebles.getContent().stream()
-                    .map(i -> new InmuebleAllDto(
-                            i.getId(),
-                            i.getTitulo(),
-                            i.getDescripcion(),
-                            i.getFechaCreacion(),
-                            i.getPrecio(),
-                            i.getLocalidad(),
-                            i.getUbicacion(),
-                            i.isPileta(),
-                            i.isParrilla(),
-                            i.getImagenes().stream()
-                                    .map(Imagen::getFilePath).collect(Collectors.toList()),
-                            i.getComentarios().stream()
-                                    .map(Comentario::getContenido).collect(Collectors.toList()),
-                            i.getUser().getName())).toList();
-
-        }catch(Exception e){
-            e.printStackTrace();
-            throw new RuntimeException("No se pudo listar inmuebles con pileta");
-        }
-    }
-
-    public List<InmuebleAllDto> buscarPorParrilla(int page, int size) {
-        try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Inmueble> inmuebles = inmuebleRepo.findByParrilla(true, pageable);
-
-            return inmuebles.getContent()
-                    .stream()
-                    .map(i -> new InmuebleAllDto(
-                            i.getId(),
-                            i.getTitulo(),
-                            i.getDescripcion(),
-                            i.getFechaCreacion(),
-                            i.getPrecio(),
-                            i.getLocalidad(),
-                            i.getUbicacion(),
-                            i.isPileta(),
-                            i.isParrilla(),
-                            i.getImagenes().stream()
-                                    .map(Imagen::getFilePath).collect(Collectors.toList()),
-                            i.getComentarios().stream()
-                                    .map(Comentario::getContenido).collect(Collectors.toList()),
-                            i.getUser().getName())).toList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("No se pudo listar inmuebles con parrilla");
-        }
-    }
-    public List<InmuebleAllDto> buscarPorParrillaYPileta(int page, int size) {
-        try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Inmueble> inmuebles = inmuebleRepo.findByParrillaAndPileta(true,true, pageable);
-
-            return inmuebles.getContent()
-                    .stream()
-                    .map(i -> new InmuebleAllDto(
-                            i.getId(),
-                            i.getTitulo(),
-                            i.getDescripcion(),
-                            i.getFechaCreacion(),
-                            i.getPrecio(),
-                            i.getLocalidad(),
-                            i.getUbicacion(),
-                            i.isPileta(),
-                            i.isParrilla(),
-                            i.getImagenes().stream()
-                                    .map(Imagen::getFilePath).collect(Collectors.toList()),
-                            i.getComentarios().stream()
-                                    .map(Comentario::getContenido).collect(Collectors.toList()),
-                            i.getUser().getName())).toList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("No se pudo listar inmuebles con parrilla y pileta");
-        }
-    }*/
 }
