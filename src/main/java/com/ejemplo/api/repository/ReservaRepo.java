@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ReservaRepo extends JpaRepository<Reservas, Integer> {
 
-    // @Query("SELECT *, users.nombre FROM `reservas` JOIN users ON user_id = users.id WHERE users.email = \"mauro@gmail.com\";")
-    // Reservas getReservasByEmail(String email);
+     List<Reservas> findByUserEmail(String email);
 }

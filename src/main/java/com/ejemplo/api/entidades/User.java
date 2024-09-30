@@ -46,6 +46,9 @@ import java.util.stream.Collectors;
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
         private Set<Token> tokens = new HashSet<>();
 
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        private Set<Inmueble> reservas = new HashSet<>();
+
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             return roles.stream()
