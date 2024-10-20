@@ -3,6 +3,7 @@ package com.ejemplo.api.controlador;
 
 import com.ejemplo.api.dto.*;
 
+import com.ejemplo.api.entidades.Caracteristicas;
 import com.ejemplo.api.entidades.Inmueble;
 
 import com.ejemplo.api.repository.InmuebleRepo;
@@ -48,8 +49,28 @@ public class InmuebleControlador {
         return ResponseEntity.ok(inmuebleServicioImpl.listarPorId(id));
     }
 
+    @GetMapping("/piscina")
+        public ResponseEntity<List<InmuebleConPiscina>> listarByPiscina(){
 
-    @GetMapping("/user/{email}")
+        List<InmuebleConPiscina> inmuebleConPiscina = inmuebleServicioImpl.listarByPiscina();
+        return ResponseEntity.ok(inmuebleConPiscina);
+        }
+
+    @GetMapping("/parrilla")
+    public ResponseEntity<List<InmuebleConParrilla>> listarByParrilla(){
+
+        List<InmuebleConParrilla> inmuebleConParrilla = inmuebleServicioImpl.listarByParrilla();
+        return ResponseEntity.ok(inmuebleConParrilla);
+    }
+    @GetMapping("/parrillaYpiscina")
+    public ResponseEntity<List<InmuebleConParrillaYPiscina>> listarByParrillaAndPiscina(){
+
+        List<InmuebleConParrillaYPiscina> inmuebleConParrillaYPiscina = inmuebleServicioImpl.listarPorInmuebleYParrilla();
+        return ResponseEntity.ok(inmuebleConParrillaYPiscina);
+
+        }
+
+        @GetMapping("/user/{email}")
     public ResponseEntity<List<InmuebleWithPortada>> buscarPorUserEmail(@PathVariable("email") String email,
                                                                     @RequestParam(value = "page",defaultValue = "0", required = false)int page,
                                                                    @RequestParam(value = "size",defaultValue = "10", required = false)int size){

@@ -11,4 +11,5 @@ import java.util.List;
 public interface CaracteristicasRepo extends JpaRepository<Caracteristicas, Integer> {
 
     List<Caracteristicas> findByInmueble(Inmueble inmueble);
+
 }

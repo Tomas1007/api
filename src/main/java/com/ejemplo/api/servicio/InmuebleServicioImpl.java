@@ -2,13 +2,13 @@ package com.ejemplo.api.servicio;
 
 import com.ejemplo.api.dto.*;
 import com.ejemplo.api.entidades.*;
+import com.ejemplo.api.repository.CaracteristicasRepo;
 import com.ejemplo.api.repository.InmuebleRepo;
 import com.ejemplo.api.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
+import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +23,7 @@ public class InmuebleServicioImpl implements InmuebleServicio{
 
     private final InmuebleRepo inmuebleRepo;
 
+    private final CaracteristicasRepo caracteristicasRepo;
     private final UserRepository userRepository;
 
     @Override
@@ -50,6 +51,104 @@ public class InmuebleServicioImpl implements InmuebleServicio{
             throw new RuntimeException("No se pudo buscar por ID");
         }
     }
+
+    public List<InmuebleConPiscina> listarByPiscina () {
+
+        try {
+
+
+            List<Inmueble> inmueble = inmuebleRepo.findByCaracteristicasPiscinaIsTrue();
+
+           return inmueble.stream().map(i -> new InmuebleConPiscina(
+                   i.getId(),
+                   i.getTitulo(),
+                   i.getDescripcion(),
+                   i.getFechaCreacion(),
+                   i.getPrecio(),
+                   i.getLocalidad(),
+                   i.getUbicacion(),
+                   Optional.ofNullable(i.getImagenPortada())
+                           .map(ImagenPortada::getFilePath)
+                           .orElse(null),
+                   i.getComentarios().stream().map(Comentario::getContenido).toList(),
+                   Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getHabitaciones).orElse(null),
+                   Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getCantidadPersonas).orElse(null),
+                   i.getUser().getName(),
+                   Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::isPiscina).orElse(null)
+           )).toList();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo encontrar inmuebles con piscina");
+        }
+    }
+    public List<InmuebleConParrillaYPiscina> listarPorInmuebleYParrilla() {
+
+        try {
+
+            List<Inmueble> inmueble = inmuebleRepo.findByCaracteristicas_ParrillaTrueAndCaracteristicas_PiscinaTrue();
+
+            return inmueble.stream().map(i -> new InmuebleConParrillaYPiscina(
+                    i.getId(),
+                    i.getTitulo(),
+                    i.getDescripcion(),
+                    i.getFechaCreacion(),
+                    i.getPrecio(),
+                    i.getLocalidad(),
+                    i.getUbicacion(),
+                    Optional.ofNullable(i.getImagenPortada())
+                            .map(ImagenPortada::getFilePath)
+                            .orElse(null),
+                    i.getComentarios().stream().map(Comentario::getContenido).toList(),
+                    Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getHabitaciones).orElse(null),
+                    Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getCantidadPersonas).orElse(null),
+                    i.getUser().getName(),
+                    Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::isPiscina).orElse(null),
+                    Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::isParrilla).orElse(null)
+
+            )).toList();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo encontrar inmuebles con piscina");
+        }
+    }
+
+
+
+    public List<InmuebleConParrilla> listarByParrilla() {
+
+        try {
+
+            List<Inmueble> inmueble = inmuebleRepo.findByCaracteristicasParrillaIsTrue();
+
+            return inmueble.stream().map(i -> new InmuebleConParrilla(
+                    i.getId(),
+                    i.getTitulo(),
+                    i.getDescripcion(),
+                    i.getFechaCreacion(),
+                    i.getPrecio(),
+                    i.getLocalidad(),
+                    i.getUbicacion(),
+                    Optional.ofNullable(i.getImagenPortada())
+                            .map(ImagenPortada::getFilePath)
+                            .orElse(null),
+                    i.getComentarios().stream().map(Comentario::getContenido).toList(),
+                    Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getHabitaciones).orElse(null),
+                    Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::getCantidadPersonas).orElse(null),
+                    i.getUser().getName(),
+                    Optional.ofNullable(i.getCaracteristicas()).map(Caracteristicas::isParrilla).orElse(null)
+            )).toList();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo encontrar inmuebles con piscina");
+        }
+    }
+
 
     @Override
     public InmuebleDto guardar(InmuebleGuardarDto inmuebleGuardarDto, String email) {
